@@ -16,6 +16,7 @@ final class AddRecordViewModel {
     var vinylCondition: RecordCondition? = nil
     var sleeveCondition: RecordCondition? = nil
     var notes = ""
+    var rating: Int = 0
     var albumArtURL: String? = nil
     var albumArtData: Data? = nil
     var selectedPhoto: PhotosPickerItem? = nil
@@ -94,6 +95,7 @@ final class AddRecordViewModel {
             sleeveCondition: sleeveCondition,
             notes: notes.isEmpty ? nil : notes,
             isWanted: isWanted,
+            rating: rating,
             discogsId: discogsId,
             albumArtURL: albumArtURL,
             albumArtData: albumArtData
@@ -121,6 +123,7 @@ final class AddRecordViewModel {
         vinylCondition = record.vinylCondition
         sleeveCondition = record.sleeveCondition
         notes = record.notes ?? ""
+        rating = record.rating
         discogsId = record.discogsId
         albumArtURL = record.albumArtURL
         albumArtData = record.albumArtData
@@ -133,7 +136,7 @@ final class AddRecordViewModel {
         title = ""; artist = ""; yearText = ""; label = ""; genreText = ""
         format = .lp; vinylCondition = nil; sleeveCondition = nil; notes = ""
         albumArtURL = nil; albumArtData = nil; selectedPhoto = nil; discogsId = nil
-        tracks = []; searchQuery = ""; searchResults = []; searchError = nil
+        rating = 0; tracks = []; searchQuery = ""; searchResults = []; searchError = nil
         showBarcodeScannerStep = false; showDiscogsSearchStep = false
     }
 }

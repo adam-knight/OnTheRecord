@@ -52,6 +52,10 @@ struct ManualEntryView: View {
                 }
             }
 
+            Section("Rating") {
+                StarRatingView(rating: $viewModel.rating)
+            }
+
             Section("Genres") {
                 TextField("e.g. Rock, Blues", text: $viewModel.genreText)
             }
@@ -165,6 +169,7 @@ struct ManualEntryView: View {
         record.vinylCondition = viewModel.vinylCondition
         record.sleeveCondition = viewModel.sleeveCondition
         record.notes = viewModel.notes.isEmpty ? nil : viewModel.notes
+        record.rating = viewModel.rating
         record.discogsId = viewModel.discogsId
         record.albumArtURL = viewModel.albumArtURL
         if let data = viewModel.albumArtData {

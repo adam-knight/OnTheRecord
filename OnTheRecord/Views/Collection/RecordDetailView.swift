@@ -3,7 +3,7 @@ import SwiftData
 
 struct RecordDetailView: View {
     @Environment(\.modelContext) private var context
-    var record: Record
+    @Bindable var record: Record
 
     @State private var showingEditSheet = false
     @State private var editViewModel = AddRecordViewModel()
@@ -46,6 +46,8 @@ struct RecordDetailView: View {
                             }
                         }
                     }
+
+                    StarRatingView(rating: $record.rating)
 
                     if !record.genres.isEmpty {
                         Text(record.genres.joined(separator: " · "))

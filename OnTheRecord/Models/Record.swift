@@ -3,22 +3,24 @@ import SwiftData
 
 @Model
 final class Record {
-    var id: UUID
-    var title: String
-    var artist: String
-    var year: Int?
-    var label: String?
-    var genres: [String]
-    var format: RecordFormat
-    var vinylCondition: RecordCondition?
-    var sleeveCondition: RecordCondition?
-    var notes: String?
-    var dateAdded: Date
-    var isWanted: Bool
-    var discogsId: String?
-    var albumArtURL: String?
-    var albumArtData: Data?
-    @Relationship(deleteRule: .cascade) var tracks: [Track]?
+    // Inline defaults required for CloudKit sync
+    var id: UUID = UUID()
+    var title: String = ""
+    var artist: String = ""
+    var year: Int? = nil
+    var label: String? = nil
+    var genres: [String] = []
+    var format: RecordFormat = RecordFormat.lp
+    var vinylCondition: RecordCondition? = nil
+    var sleeveCondition: RecordCondition? = nil
+    var notes: String? = nil
+    var dateAdded: Date = Date()
+    var isWanted: Bool = false
+    var rating: Int = 0
+    var discogsId: String? = nil
+    var albumArtURL: String? = nil
+    var albumArtData: Data? = nil
+    @Relationship(deleteRule: .cascade) var tracks: [Track]? = nil
 
     init(
         title: String,
@@ -31,6 +33,7 @@ final class Record {
         sleeveCondition: RecordCondition? = nil,
         notes: String? = nil,
         isWanted: Bool = false,
+        rating: Int = 0,
         discogsId: String? = nil,
         albumArtURL: String? = nil,
         albumArtData: Data? = nil
@@ -47,6 +50,7 @@ final class Record {
         self.notes = notes
         self.dateAdded = Date()
         self.isWanted = isWanted
+        self.rating = rating
         self.discogsId = discogsId
         self.albumArtURL = albumArtURL
         self.albumArtData = albumArtData
