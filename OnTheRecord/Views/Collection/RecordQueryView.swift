@@ -6,11 +6,13 @@ struct RecordQueryView: View {
     let sort: RecordSort
     let searchText: String
     let viewMode: CollectionViewMode
+    let filter: RecordFilter
 
-    init(isWanted: Bool, sort: RecordSort, searchText: String, viewMode: CollectionViewMode) {
+    init(isWanted: Bool, sort: RecordSort, searchText: String, viewMode: CollectionViewMode, filter: RecordFilter = RecordFilter()) {
         self.sort = sort
         self.searchText = searchText
         self.viewMode = viewMode
+        self.filter = filter
         let wanted = isWanted
         _records = Query(filter: #Predicate<Record> { $0.isWanted == wanted })
     }
@@ -25,12 +27,32 @@ struct RecordQueryView: View {
     }
 
     private var displayRecords: [Record] {
-        let sorted = sortedRecords
-        guard !searchText.isEmpty else { return sorted }
-        return sorted.filter {
-            $0.title.localizedStandardContains(searchText) ||
-            $0.artist.localizedStandardContains(searchText)
+        var result = sortedRecords
+        if !searchText.isEmpty {
+            result = result.filter {
+                $0.title.localizedStandardContains(searchText) ||
+                $0.artist.localizedStandardContains(searchText)
+            }
         }
+        if !filter.formats.isEmpty {
+            result = result.filter { filter.formats.contains($0.format) }
+        }
+        if !filter.decades.isEmpty {
+            result = result.filter { record in
+                guard let year = record.year else { return false }
+                return filter.decades.contains((year / 10) * 10)
+            }
+        }
+        if !filter.genres.isEmpty {
+            result = result.filter { !Set($0.genres).isDisjoint(with: filter.genres) }
+        }
+        if !filter.vinylConditions.isEmpty {
+            result = result.filter { record in
+                guard let vc = record.vinylCondition else { return false }
+                return filter.vinylConditions.contains(vc)
+            }
+        }
+        return result
     }
 
     private var sortedRecords: [Record] {
