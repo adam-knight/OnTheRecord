@@ -2,12 +2,15 @@ import SwiftUI
 import SwiftData
 
 struct CollectionView: View {
+    @Query(filter: #Predicate<Record> { !$0.isWanted }) private var allRecords: [Record]
+
     @State private var sort = RecordSort.dateAdded
     @State private var viewMode = CollectionViewMode.grid
     @State private var searchText = ""
     @State private var filter = RecordFilter()
     @State private var showingFilterSheet = false
     @State private var showingAddSheet = false
+    @State private var luckyRecord: Record?
     @State private var addViewModel = AddRecordViewModel()
 
     var body: some View {
@@ -23,6 +26,12 @@ struct CollectionView: View {
                         ) {
                             viewMode = viewMode == .grid ? .list : .grid
                         }
+                    }
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Lucky Pick", systemImage: "dice") {
+                            luckyRecord = allRecords.randomElement()
+                        }
+                        .disabled(allRecords.isEmpty)
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Menu("Sort", systemImage: "arrow.up.arrow.down") {
@@ -53,6 +62,16 @@ struct CollectionView: View {
                 }
                 .sheet(isPresented: $showingAddSheet) {
                     AddRecordView(viewModel: addViewModel, isWanted: false)
+                }
+                .sheet(item: $luckyRecord) { record in
+                    NavigationStack {
+                        RecordDetailView(record: record)
+                            .toolbar {
+                                ToolbarItem(placement: .topBarLeading) {
+                                    Button("Done") { luckyRecord = nil }
+                                }
+                            }
+                    }
                 }
         }
     }
