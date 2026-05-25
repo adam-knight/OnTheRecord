@@ -1,0 +1,3 @@
+// Config.xcconfig.template — copy to Config.xcconfig and fill in your token.
+// Get your free personal access token at: https://www.discogs.com/settings/developers
+DISCOGS_TOKEN = your_discogs_personal_access_token_here
