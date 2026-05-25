@@ -10,6 +10,7 @@ struct CollectionView: View {
     @State private var filter = RecordFilter()
     @State private var showingFilterSheet = false
     @State private var showingAddSheet = false
+    @State private var showingImportSheet = false
     @State private var luckyRecord: Record?
     @State private var addViewModel = AddRecordViewModel()
 
@@ -51,9 +52,14 @@ struct CollectionView: View {
                         }
                     }
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button("Add record", systemImage: "plus") {
-                            addViewModel.reset()
-                            showingAddSheet = true
+                        Menu("Add", systemImage: "plus") {
+                            Button("Add Record", systemImage: "plus") {
+                                addViewModel.reset()
+                                showingAddSheet = true
+                            }
+                            Button("Import from Discogs", systemImage: "arrow.down.circle") {
+                                showingImportSheet = true
+                            }
                         }
                     }
                 }
@@ -62,6 +68,9 @@ struct CollectionView: View {
                 }
                 .sheet(isPresented: $showingAddSheet) {
                     AddRecordView(viewModel: addViewModel, isWanted: false)
+                }
+                .sheet(isPresented: $showingImportSheet) {
+                    ImportDiscogsView()
                 }
                 .sheet(item: $luckyRecord) { record in
                     NavigationStack {
