@@ -33,22 +33,16 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6681BE1F2FC4810400CA4087 /* OnTheRecord */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = OnTheRecord;
 			sourceTree = "<group>";
 		};
 		6681BE2D2FC4810600CA4087 /* OnTheRecordTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = OnTheRecordTests;
 			sourceTree = "<group>";
 		};
 		6681BE372FC4810600CA4087 /* OnTheRecordUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = OnTheRecordUITests;
 			sourceTree = "<group>";
 		};
@@ -399,6 +393,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = OnTheRecord/OnTheRecord.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 64KUBWCRED;
 				ENABLE_PREVIEWS = YES;
@@ -434,6 +429,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = OnTheRecord/OnTheRecord.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 64KUBWCRED;
 				ENABLE_PREVIEWS = YES;
