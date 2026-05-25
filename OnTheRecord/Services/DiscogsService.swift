@@ -30,6 +30,18 @@ final class DiscogsService {
         return try await fetchSearchResults(from: url)
     }
 
+    func fetchCollectionPage(username: String, page: Int) async throws -> (releases: [DiscogsCollectionRelease], totalPages: Int) {
+        let url = baseURL
+            .appending(path: "users/\(username)/collection/folders/0/releases")
+            .appending(queryItems: [
+                URLQueryItem(name: "page", value: String(page)),
+                URLQueryItem(name: "per_page", value: "100")
+            ])
+        let (data, _) = try await URLSession.shared.data(for: authorizedRequest(for: url))
+        let response = try JSONDecoder().decode(DiscogsCollectionResponse.self, from: data)
+        return (response.releases, response.pagination.pages)
+    }
+
     func release(id: Int) async throws -> DiscogsRelease {
         let url = baseURL.appending(path: "releases/\(id)")
         let (data, _) = try await URLSession.shared.data(for: authorizedRequest(for: url))
